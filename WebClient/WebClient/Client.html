@@ -1,0 +1,71 @@
+﻿﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Graphics Test</title>
+    <link rel="stylesheet" href="Client.css">
+</head>
+<body>
+    <fieldset>
+        <legend>Settings</legend>
+        <div>
+            <p>Min Value=<input id="minV" type="number" step="0.001" />, Max Value=<input id="maxV" type="number" step="0.001" /></p>
+        </div>
+    </fieldset>
+    <input type="button" class="btn" value="Invoke" id="btn_1" />
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Surname</th>
+                    <th>Name</th>
+                    <th>Patronymic</th>
+                    <th>GPA</th>
+                </tr>
+            </thead>
+            <tbody id="students-output">
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript" src="lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript">
+        minV.value = 3.8;
+        maxV.value = 4.2;
+
+        const success = function (data) {
+            $("#students-output").empty();
+            const keys = ["LastName", "FirstName", "Patronymic", "GPA"]
+            data.forEach(json_data_set => {
+                var tr = document.createElement("tr");
+                keys.forEach(key => {
+                    var td = document.createElement("td");
+                    td.innerText = json_data_set[key];
+                    tr.appendChild(td);
+                });
+                document.querySelector("tbody").appendChild(tr);
+            });
+        }
+
+        const button = document.getElementById("btn_1").onclick = function () {
+            if (minV.value < 0 || maxV.value > 5) {
+                window.alert("at least 0 and at most 5");
+                minV.value = Math.max(0, minV.value);
+                maxV.value = Math.min(5, maxV.value);
+                return;
+            }
+            $.ajax({
+                url: `http://localhost:65495/Service.svc/GetStudents?minValue=${minV.value}&maxValue=${maxV.value}`,
+                Accept: 'application/json',
+                type: "GET",
+                success: success,
+                error: function (e) {
+                    alert("something went wrong");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

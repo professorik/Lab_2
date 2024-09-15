@@ -1,0 +1,24 @@
+﻿input[type=number] {
+    width: 64px;
+}
+
+input[type="button"] {
+    width: 128px;
+    height: 24px;
+    margin: 2px;
+}
+
+fieldset {
+    width: fit-content;
+}
+
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 3px solid black;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid black;
+}
