@@ -57,7 +57,7 @@
                 return;
             }
             $.ajax({
-                url: `http://localhost:65495/Service.svc/GetStudents?minValue=${minV.value}&maxValue=${maxV.value}`,
+                url: `http://localhost:55185/api/students?minValue=${minV.value}&maxValue=${maxV.value}`,
                 Accept: 'application/json',
                 type: "GET",
                 success: success,
